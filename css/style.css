@@ -1,0 +1,148 @@
+body {
+  margin: auto;
+  width: 320px;
+  margin-top: 3em;
+  background-image: url("https://s20.postimg.cc/v7ev7xevh/basic_background_50.png");
+}
+
+#fFCLogo {
+  width: 300px;
+}
+
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#currentValue {
+  width: 320px;
+  min-height: 30px;
+  text-align: right;
+  line-height: 25px;
+  font-size: 18px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  background-image: url("https://s20.postimg.cc/ad3m9dzu5/blue-gradient-contour-abstract-d-geometrical-cubes-seamless-patt.jpg");
+  background-size: 200px 200px;
+  color: #e6e6ff;
+  font-family: "Coda";
+}
+
+#display {
+  width: 320px;
+  min-height: 50px;
+  text-align: right;
+  font-size: 30px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  background-image: url("https://s20.postimg.cc/ad3m9dzu5/blue-gradient-contour-abstract-d-geometrical-cubes-seamless-patt.jpg");
+  background-size: 200px 200px;
+  color: #e6e6ff;
+  font-family: "Coda";
+}
+
+#inputs {
+  width: 320px;
+  text-align: center;
+  background-image: url("https://s20.postimg.cc/ad3m9dzu5/blue-gradient-contour-abstract-d-geometrical-cubes-seamless-patt.jpg");
+  background-size: 800px 800px;
+}
+
+#clear {
+  font-size: 20px;
+  background: rgba(255, 102, 102, 0.6);
+}
+
+#clear:hover {
+  background: rgba(255, 77, 77, 0.75);
+}
+
+#zero {
+  width: 160px;
+}
+
+#equals {
+  font-size: 20px;
+  width: 240px;
+  background: rgba(0, 153, 51, 0.3);
+}
+
+#equals:hover {
+  outline: 2px solid #000080;
+  background: rgba(0, 153, 51, 0.5);
+}
+
+.number {
+  width: 80px;
+  height: 80px;
+  border: 1px hidden black;
+  background: rgba(204, 102, 255, 0.2);
+  outline: 1px solid #000099;
+  color: #e6e6ff;
+  font-size: 28px;
+  font-family: "Coda";
+}
+
+.number:hover {
+  outline: 2px solid #000080;
+  background: rgba(153, 153, 255, 0.6);
+}
+
+.operand {
+  border: none;
+  width: 80px;
+  height: 80px;
+  background: none;
+  outline: 1px solid #006699;
+  font-size: 28px;
+  color: white;
+  font-family: "Coda";
+}
+
+.operand:hover {
+  outline: 2px solid #000080;
+  background: rgba(0, 68, 102, 0.6);
+}
+
+@media screen and (max-width: 450px) {
+  #fFCLogo {
+    width: 250px;
+  }
+
+  .number {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+  }
+
+  .operand {
+    font-size: 24px;
+    width: 60px;
+    height: 60px;
+  }
+
+  #equals {
+    width: 180px;
+  }
+
+  #zero {
+    width: 120px;
+  }
+
+  #inputs {
+    width: 240px;
+    background-size: 600px 600px;
+  }
+
+  #display {
+    width: 240px;
+    font-size: 30px;
+  }
+
+  #currentValue {
+    width: 240px;
+    font-size: 18px;
+  }
+}

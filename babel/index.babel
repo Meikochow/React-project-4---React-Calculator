@@ -1,0 +1,116 @@
+const operand = /[*/+-]/;
+class Inputs extends React.Component{
+  constructor(props){
+    super(props);
+  }
+  render(){
+    return(
+    <div id="inputs">
+<button type="button" value="7" id="seven" className="number"  onClick={this.props.addElements}>7</button>
+<button type="button" value="8" id="eight" className="number"  onClick={this.props.addElements}>8</button>
+<button type="button" value="9" id="nine" className="number" onClick={this.props.addElements}>9</button>
+<button type="button" value="*" id="multiply" className="operand" onClick={this.props.addOperator}>x</button> 
+        
+<button type="button" value="4" id="four" className="number"  onClick={this.props.addElements}>4</button> 
+<button type="button" value="5" id="five" className="number"  onClick={this.props.addElements}>5</button>
+<button type="button" value="6" id="six" className="number"  onClick={this.props.addElements}>6</button>
+<button type="button" value="/" id="divide" className="operand" onClick={this.props.addOperator}>/</button>
+
+<button type="button" value="1" id="one" className="number"  onClick={this.props.addElements}>1</button>
+<button type="button" value="2" id="two" className="number"  onClick={this.props.addElements}>2</button> 
+<button type="button" value="3" id="three" className="number"  onClick={this.props.addElements}>3</button>
+<button type="button" value="-" id="subtract" className="operand" onClick={this.props.addOperator}>-</button> 
+ 
+<button type="button" value="0" id="zero" className="number" onClick={this.props.addElements}>0</button>   
+<button type="button" value="." id="decimal" className="number"  onClick={this.props.addDecimal}>.</button>   
+<button type="button" value="+" id="add" className="operand" onClick={this.props.addOperator}>+</button>  
+        
+<button type="button" value="=" id="equals" className="operand" onClick={this.props.getResult}>=</button>
+<button type="button" value="AC" id="clear" className="operand" onClick={this.props.clearDisplay}>AC</button> 
+      </div>
+    )
+  }
+}
+
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+    display: '',
+    currentValue:'0',
+    operandCount:''
+    }
+    this.clearDisplay=this.clearDisplay.bind(this);
+    this.addElements=this.addElements.bind(this);
+    this.addOperator=this.addOperator.bind(this);
+    this.getResult=this.getResult.bind(this);
+    this.addDecimal=this.addDecimal.bind(this);
+  }
+
+  clearDisplay(){
+    //initializes the state
+   this.setState({display:"",operandCount:"",currentValue:"0"})
+  }
+  addElements(e){
+if(this.state.currentValue.length<=12||this.state.display.length<=12){
+    //if no entries were made
+if(this.state.display=="0"||this.state.currentValue=="0"){
+  //add the first number
+  this.setState({display:e.target.value,currentValue:e.target.value})
+  //if the first entry was made and last element entered is a non = operand
+}else if(operand.test(this.state.currentValue[0])&&this.state.operandCount!=="="){ 
+  //add to display the old input and the new input; and only the new input to the currentValue
+  this.setState({display:this.state.display+e.target.value,currentValue:e.target.value})
+  //else if the last operand entered is an "=",supposedly after the the eval was made and displayed
+}else if(this.state.operandCount==="="){
+      // we insert the new number elements instead of the old ones and clear the operandCount
+      this.setState({currentValue:e.target.value,display:e.target.value,operandCount:''}) 
+}// the rest of the cases just add a number:
+    else {this.setState({currentValue:this.state.currentValue+e.target.value,display:this.state.display+e.target.value})}
+      }else{console.log("maximum input reached")}
+  }
+  
+  addOperator(e){
+    //if the state 
+  this.state.display==="0"&&e.target.value==="+"||this.state.display==="0"&&e.target.value==="-"?this.setState({currentValue:e.target.value,display:e.target.value}):this.state.display==="0"&&e.target.value==="*"||this.state.display==="0"&&e.target.value==="/"?this.setState({currentValue:this.state.currentValue,display:this.state.display}):
+  //if the last element of a display is an operand and display aint a '0'
+ operand.test(this.state.display[this.state.display.length-1])?
+    //we substitute the last operand with the last entered one
+this.setState({display:this.state.display.slice(0,this.state.display.length-1)+e.target.value,operandCount:this.state.operandCount+e.target.value,currentValue:e.target.value}):
+  this.setState({display:this.state.display+e.target.value,operandCount:this.state.operandCount+e.target.value,currentValue:e.target.value});
+if(this.state.operandCount==="="){this.setState({display:this.state.currentValue+e.target.value,currentValue:e.target.value})}
+if(this.state.display[this.state.display.length-1]==="."){this.setState({display:this.state.display.slice(0,this.state.display.length-1)+e.target.value,currentValue:e.target.value,operandCount:this.state.operandCount+e.target.value})
+}
+  }
+  getResult(e){ 
+if(operand.test(this.state.display[this.state.display.length-1])){
+  this.setState({display:this.state.display.slice(0,this.state.display.length-1)+'='+eval(this.state.display.slice(0,this.state.display.length-1)).toString(),currentValue:eval(this.state.display.slice(0,this.state.display.length-1)),operandCount:e.target.value});
+}
+ this.setState({display:this.state.display+'='+eval(this.state.display),currentValue:eval(this.state.display).toString(),operandCount:e.target.value});
+  }
+  addDecimal(e){
+  this.state.display==""||operand.test(this.state.display[this.state.display.length-1])?this.setState({display:this.state.display+"0.",currentValue:"0.",operandCount:this.state.operandCount+"."}):
+  this.state.display[this.state.display.length-1]=="."||this.state.operandCount[this.state.operandCount.length-1]=="."?this.setState({display:this.state.display}):
+  this.setState({display:this.state.display+e.target.value,currentValue:this.state.currentValue+".",operandCount:this.state.operandCount+"."});
+    if(this.state.operandCount==="="){this.setState({display:"0.",currentValue:"0.",operandCount:this.state.operandCount+"."})}
+  }
+  render(){
+    return(
+<div id="app">  
+    <a href="https://www.freecodecamp.org/challenges/learn-how-freecodecamp-works" target="_blank"> <img id="fFCLogo" src="https://design-style-guide.freecodecamp.org/downloads/freeCodeCamp-alternative.png" /></a>
+    <div id="currentValue" >{this.state.display}
+    </div>
+    <div id="display" >{this.state.currentValue}
+    </div>
+ <Inputs
+        addElements={this.addElements}
+        addDecimal={this.addDecimal}
+        clearDisplay={this.clearDisplay}
+        addOperator={this.addOperator}
+        getResult={this.getResult}/>
+<footer>Coded by Victor Cojocaru 2018</footer>
+</div>
+    )
+  }
+}
+ReactDOM.render(<App/>,app)
